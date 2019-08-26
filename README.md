@@ -114,8 +114,8 @@ console.log("getSystemInfoSync "+ JSON.stringify(sysInfo) );
 	"vol_current": 0,
 	"last_version": 36,
 	"last_demos": "新版本发布",
-	"DeviceID": "Byo7QUnd41553912611",
-	"DeviceQR": "http://kuaipin.wifi-town.com/api/serial_query/0a96655f480c1eee#BIND_Byo7QUnd41553912611",
+	"DeviceID": "Buo7QUnd415539",
+	"DeviceQR": "http://kuaipin.wifi-town.com/api/serial_query/0a96655f480c1eee#BIND_Buo7QUnd415539",
 	"serial": "0a96655f480c1eee",
 	"email": "test@envcat.com",
 	"DeviceRole": "lan",
@@ -306,9 +306,9 @@ if (sysInfo.slaveScreen !== undefined)
 ```js
 
 var opt = {};
-opt.host = "webp2p.wifi-town.com";
+opt.host = "webp2p.example.com";
 opt.domain = sysInfo.DeviceID;
-opt.port = 6443;
+opt.port = 1234;
 
 var p2pInfo = JSBridge.getWebP2pInfoSync();
 if (p2pInfo.autoboot !== true)
@@ -331,9 +331,9 @@ if (p2pInfo.running !== true)
 ```json
 {
 	"status": 0,
-	"host": "webp2p.wifi-town.com",
-	"domain": "Byo7QUnd41553912611",
-	"port": 6443,
+	"host": "webp2p.example.com",
+	"domain": "Buo7QUnd415539",
+	"port": 1234,
 	"autoboot": false
 }
 ```
@@ -421,7 +421,7 @@ JSBridge.Speak("你好 世界");
 
 #### 2.14.1 编程
 ```js
-JSBridge.setVolume({type:'notify', val: '7'});```
+JSBridge.setVolume({type:'notify', val: '7'});
 ```
 
 

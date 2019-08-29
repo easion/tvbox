@@ -31,6 +31,7 @@ RaftLink信息发布终端是基于安卓的信息发布应用。用户可以自定义网页、幻灯片、视频三
 ```bash
 adb connect 192.168.1.22
 ```
+也可以通过USB同设备相连。
   
 ## 2. 卸载旧版本
 ```bash
@@ -43,6 +44,9 @@ adb uninstall com.wifitown.cabinet
 ```bash
 adb install rl-screen.apk
 ```
+
+安装后首次启动，系统会询问软件的权限要求，插入鼠标或者遥控器，全部选是。
+并配置为默认桌面。
 
 ## 4.0 联系开发者
 ----

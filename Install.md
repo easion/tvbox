@@ -45,6 +45,7 @@ adb uninstall com.wifitown.cabinet
 adb install rl-screen.apk
 ```
 
+上述操作也可以通过安卓包管理器和文件管理器配合完成。
 安装后首次启动，系统会询问软件的权限要求，插入鼠标或者遥控器，全部选是。
 并配置为默认桌面。
 

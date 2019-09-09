@@ -338,6 +338,10 @@ if (p2pInfo.running !== true)
 }
 ```
 
+#### ngrok服务器部署教程：
+
+[https://luozm.github.io/ngrok](https://luozm.github.io/ngrok)
+
 停止web反向代理:
 ```js
 JSBridge.stopWebP2P();

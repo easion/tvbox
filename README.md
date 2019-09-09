@@ -441,7 +441,16 @@ JSBridge.startLocalServiceDiscovery({type: "_hap._tcp."}, function(list){
 ```
 查询的结果见2.1章节注册的MDNS回调函数。
 
-#### 2.11 调试
+
+### 2.16 执行命令
+
+#### 2.16.1 编程
+```js
+JSBridge.doExecCommand("/system/xbin/cpustats");
+```
+上面指令会推送到一个线程异步执行，所以不支持返回输出数据。
+
+#### 调试
 console.log的输出将保存在系统日志logcat中。
 请登录到web控制台，菜单展开后点击“日志”目录。   
 

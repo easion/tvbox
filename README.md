@@ -300,6 +300,11 @@ if (sysInfo.slaveScreen !== undefined)
 
 ### 2.7 WebP2P
 
+
+#### ngrok服务器部署教程：
+[https://luozm.github.io/ngrok](https://luozm.github.io/ngrok)
+
+
 #### 2.7.1 编程
 
 启动/保存web反向代理
@@ -337,10 +342,6 @@ if (p2pInfo.running !== true)
 	"autoboot": false
 }
 ```
-
-#### ngrok服务器部署教程：
-
-[https://luozm.github.io/ngrok](https://luozm.github.io/ngrok)
 
 停止web反向代理:
 ```js

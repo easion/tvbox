@@ -34,14 +34,14 @@ RaftLinkпео╒╥╒╡╪жу╤к©иж╖Ёж2╦ЖпИдБфад╩ё╛нрцг╫╗рИсц╩╖╡исцWebApp╣д╥╫й╫©╙╥╒дЗ╣дпео╒╥
   - 
  ## 1.╣╪хК╩Ы╢║©Б
 
-╣╪хК╩Ы╢║©Бё╛©и╢сhttps://kuaipin.wifi-town.com/kp/обтьобцФнд╪Ч║ё
+╣╪хК╩Ы╢║©Бё╛©и╢с [https://kuaipin.wifi-town.com](https://kuaipin.wifi-town.com) обтьобцФнд╪Ч║ё
 ```html
 <head>
 <--- й║бтфДкШпео╒   --->
-<script src="/kp/dsbridge.js"> </script>
-<script src="/kp/fly.js"></script>
-<script src="/kp/engine-wrapper.js"></script>
-<script src="/kp/adapter.js"></script>
+<script src="https://kuaipin.wifi-town.com/kp/dsbridge.js"> </script>
+<script src="https://kuaipin.wifi-town.com/kp/fly.js"></script>
+<script src="https://kuaipin.wifi-town.com/kp/engine-wrapper.js"></script>
+<script src="https://kuaipin.wifi-town.com/kp/adapter.js"></script>
 </head>
 ```
 

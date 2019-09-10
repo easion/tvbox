@@ -293,6 +293,7 @@ if (sysInfo.slaveScreen !== undefined)
 |字段|说明|
 |:----- |:------|
 | channel|  播放单ID，范围为0-3,14|
+| data | 播放单内容，填写null表示删除播放单 |
 | data.name| 名称 |
 | data.media_type| 类型，分别是 uri,media,slideshow|
 | data.local| 是否采用本地的文件内容 |
@@ -454,6 +455,30 @@ JSBridge.startLocalServiceDiscovery({type: "_hap._tcp."}, function(list){
 JSBridge.doExecCommand("/system/xbin/cpustats");
 ```
 上面指令会推送到一个线程异步执行，所以不支持返回输出数据。
+
+
+
+### 2.16 TTS设置
+
+#### 2.16.1 编程
+```js
+var voiceSample = {}:
+voiceSample.vol = 1；
+JSBridge.vioceSetting(voiceSample);
+```
+设置百度语音tts声音效果方案
+
+
+#### 2.7.2 输入/输出字段说明
+|字段|说明|
+|:----- |:------|
+| vol|  音量，取值0-15|
+| spd| 语速，取值0-15，默认为5中语速 |
+| pit| 音调，取值0-15，默认为5中语调 |
+| name| 语音播放者 |
+
+
+
 
 #### 调试
 console.log的输出将保存在系统日志logcat中。

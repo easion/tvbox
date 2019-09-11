@@ -259,6 +259,18 @@ plVid.local = true;
 plVid.demos = "js video";
 plVid.data = {};
 
+/*网络下载到本地，视频/图片都是同样的结构*/
+var httpVid = {};
+httpVid.media_type = "media";
+httpVid.name = "js http";
+httpVid.demos = "http video";
+httpVid.data = [
+  {path: 'http://kuaipin.wifi-town.com/file123.jpg',
+	name: 'My Photo', keyid: 'file123', filesize: 123009},
+  {path: 'http://kuaipin.wifi-town.com/file124.jpg',
+	name: 'My Photo2', keyid: 'file124', filesize: 163014}
+];
+
 if (sysInfo.slaveScreen !== undefined)
 {
 	var plinfo = JSBridge.getPlayListSync({channel: sysInfo.slaveScreen});
@@ -462,23 +474,59 @@ JSBridge.doExecCommand("/system/xbin/cpustats");
 
 #### 2.16.1 编程
 ```js
-var voiceSample = {}:
-voiceSample.vol = 1；
-JSBridge.vioceSetting(voiceSample);
+var voiceSample = {};
+
+voiceSample = JSBridge.getVioceSetting();
+voiceSample.speaker = '0';
+voiceSample.volume = '9';
+voiceSample.speed = '5';
+voiceSample.pitch = '5';
+
+voiceSample = JSBridge.getVioceSetting();
+console.log("getVioceSetting "+ JSON.stringify(voiceSample) );
+voiceSample.speaker = '110'; //度小童（情感儿童声）
+var newSetting = {data: voiceSample};
+JSBridge.vioceSetting(newSetting, function(res){
+	console.log("vioceSetting "+ JSON.stringify(res) );
+	if (res.result == 0)
+	{
+		JSBridge.Speak('TTS配置已经更新,重启程序生效');
+	}
+	else{
+		JSBridge.Speak('TTS配置已经删除');
+	}
+});
+
+//删除
+newSetting = {data: null};
+JSBridge.vioceSetting(newSetting, function(res){
+	console.log("vioceSetting "+ JSON.stringify(res) );
+	if (res.result == 0)
+	{
+		JSBridge.Speak('TTS配置已经更新,重启程序生效');
+	}
+	else{
+		JSBridge.Speak('TTS配置已经删除');
+	}
+});
+
 ```
 设置百度语音tts声音效果方案
 
 
 #### 2.7.2 输入/输出字段说明
+
+取值请参考[百度TTS文档](https://ai.baidu.com/docs#/TTS-Android-SDK/top)
+
 |字段|说明|
 |:----- |:------|
-| vol|  音量，取值0-15，数字类型，含下面2项|
-| spd| 语速，取值0-15，默认为5中语速 |
-| pit| 音调，取值0-15，默认为5中语调 |
-| name| 字符串，语音播放者 |
-| save| boolean 是否需要保存 |
+| volume|  音量，取值0-15，|
+| speed| 语速，取值0-15 |
+| pitch| 音调，取值0-15，默认为5中语调 |
+| speaker| 语音播放者 |
 
-
+请注意上面数据类型为字符串
+删除data填写null或者为空
 
 #### 调试
 console.log的输出将保存在系统日志logcat中。

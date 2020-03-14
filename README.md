@@ -12,6 +12,7 @@
 |Version|Revision|Author|Date|
 |:----- |:-------|:-----|----- |
 |v1.0 |First initial version|Easion|2019-08-26 |
+|v1.1 |增加多屏环境等API见2.18章及以后|Easion|2020-03-14 |
 
 
 > 网站: 
@@ -213,7 +214,22 @@ function queryNetState()
 ```
 
 ```json
- {"connected":true,"type":"","networkType":"None"}
+{
+	"connected": true,
+	"type": "4g",
+	"simOperator": "46001",
+	"networkType": "LTE",
+	"traffic": {
+		"mobileRxBytes": 0,
+		"mobileRxPackets": 0,
+		"mobileTxBytes": 0,
+		"mobileTxPackets": 0,
+		"totalRxBytes": 953567,
+		"totalRxPackets": 970,
+		"totalTxBytes": 90479,
+		"totalTxPackets": 729
+	}
+}
 ```
 
 #### 2.3.2 返回字段说明
@@ -222,6 +238,8 @@ function queryNetState()
 | connected | 网络是否已经连接 |
 | type | 当前网络类型，如wifi,lte |
 | networkType | 移动网络类型,如2g,3g,4g |
+| simOperator | 移动网络运营商ID |
+| traffic | 流量统计,单位为字节数或者报文个数 |
 
 ### 2.4 主从屏幕切换
 
@@ -582,6 +600,45 @@ var vols = JSBridge.getVolumeSync();
 	"voice_call_current": 5
 }
 ```
+
+### 2.18 获取机顶盒内置存储文件列表
+
+#### 2.18.1 编程
+```js
+var path = 'picture';
+var fileList = JSBridge.getFloderContents(path + '/');
+```
+
+获取当前指定目录(参数为String)的文件列表,照片上传为picture,视频为video,PDF为pdf。
+
+```json
+[{
+	"path": "picture/bg-9.jpg",
+	"filename": "bg-9.jpg",
+	"size": 395203,
+	"id": 1,
+	"time": 1565775738000
+}]
+```
+#### 2.3.2 返回字段说明
+|字段|说明|
+|:----- |:------|
+| path | 路径 |
+| filename | 文件名 |
+| size | 文件大小 |
+| id | 编号 |
+| time | 文件最后修改UNIX时间戳，单位毫秒 |
+
+
+### 2.18 删除文件
+
+#### 2.18.1 编程
+```js
+JSBridge.removeFile("picture/bg-9.jpg");
+```
+
+删除设定的文件
+
 
 
 

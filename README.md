@@ -800,6 +800,82 @@ JSBridge.savePlayListFiles(who);
 保存通过removePlayListFile/addPlayListFile临时添加、移除的内容同步到设定的播放单
 
 
+### 2.29 启用4G网络流量开关
+
+#### 2.29.1 编程
+```js
+var state = {enabled: true};
+JSBridge.setMobileDataEnabled(state);
+```
+
+注意：由于安卓不同版本策略的不同，可能有些平台无法工作，需要通过调用openApp进入设置界面手动设置。
+
+
+### 2.30 启用Wifi开关
+
+#### 2.30.1 编程
+```js
+var state = {enabled: true};
+JSBridge.setWifiEnabled(state);
+```
+
+注意：由于安卓不同版本策略的不同，可能有些平台无法工作，需要通过调用openApp进入设置界面手动设置。
+
+
+
+### 2.30 启停多屏显示开关
+
+#### 2.30.1 编程
+```js
+var state = {enabled: true};
+JSBridge.setPresentationEnabled(state);
+```
+
+启停多屏显示开关, 此API当前只是修改运行参数，需要调用应用重启功能来加载新配置
+
+
+
+### 2.31 设置RK3288平台的定时开关机功能
+
+#### 2.31.1 编程
+```js
+var state = {lockTime: "22:00", startTime:"06:00"};
+JSBridge.setRK3288Clock(state);
+```
+
+设置RK3288平台的定时开关机功能，需要主板开发商的板子兼容56iq标准
+
+#### 2.31.2 输入字段说明
+|字段|说明|
+|:----- |:------|
+| lockTime | 关机时间 |
+| startTime | 开机时间 |
+
+
+
+
+### 2.32 发送按键
+
+#### 2.32.1 编程
+```js
+var state = {action: "press", key:"3"};
+JSBridge.postKey(state);
+```
+
+发送虚拟按键到安卓系统
+
+#### 2.32.2 action输入字段说明
+|字段|说明|
+|:----- |:------|
+| press | 按键类型为按压 |
+| down | 按键类型为按下 |
+| up | 按键类型为松开 |
+
+key 字符串，兼容安卓API“KeyEvent.keyCodeFromString”即可，参考：
+https://developer.android.com/reference/android/view/KeyEvent#keyCodeFromString(java.lang.String)
+
+
+
 ## 3. FAQ
   
 ####  3.1我需要增加一些API 可以怎样提交

@@ -697,7 +697,7 @@ JSBridge.addPlayListFile(newItem);
 向播放单实时添加新条目(默认不保存),新条目会尽快安排播出，但不保存到当前播放单，
 需要调用savePlayListFiles才能保存。
 
-#### 2.25.2 返回字段说明
+#### 2.25.2 输入字段说明
 |字段|说明|
 |:----- |:------|
 | playlist | 该条目对应的播放单ID |
@@ -706,20 +706,92 @@ JSBridge.addPlayListFile(newItem);
 | name | 文件展示名称 |
 
 
-### 2.24 保存播放单
 
-#### 2.24.1 编程
+### 2.26 实时查询当前在播的节目列表
+
+#### 2.26.1 编程
 ```js
-var who = {playlist: 14};
-JSBridge.savePlayListFiles(who);
+var allList = JSBridge.getRealTimePlayListSync();
 ```
 
-保存通过removePlayListFile/addPlayListFile临时添加、移除的内容同步到设定的播放单
+应答
+```json
+{
+	"timeID": 3,
+	"slave": {
+		"id": 14,
+		"currentElement": 0,
+		"playType": "uri",
+		"local": true,
+		"playName": "connect web",
+		"uri": "https://kuaipin.wifi-town.com/kp/connect.html",
+		"files": 0,
+		"elements": []
+	},
+	"main": {
+		"id": 3,
+		"currentElement": 0,
+		"playType": "pdf",
+		"local": false,
+		"playName": "js",
+		"files": 2,
+		"elements": [{
+			"type": 2,
+			"key": 0,
+			"name": "快屏-简介.pdf",
+			"uri": "http://cdn.wifi-town.com/xx.pdf",
+			"path": "xx.pdf"
+		}, {
+			"type": 2,
+			"key": 1,
+			"name": "快屏云柜 - 微信智能存包柜产品介绍.pdf",
+			"uri": "http://cdn.wifi-town.com/xx2.pdf",
+			"path": "xx2.pdf"
+		}]
+	},
+	"presentation": {
+		"id": -1,
+		"currentElement": 0,
+		"playType": "uri",
+		"local": false,
+		"playName": "默认网页",
+		"uri": "https://kuaipin.wifi-town.com/kp_lan",
+		"files": 0,
+		"elements": []
+	}
+}
+
+```
+
+实时查询当前在播的节目列表,根据节目单显示区域可分为main,slave,presentation三组。
+#### 2.26.3 显示区域说明
+|字段|说明|
+|:----- |:------|
+| timeID | 主屏前端节目单ID，根据时间段确定 |
+| main | 主屏默认显示的前端节目单 |
+| slave | 默认不显示的后端节目单，可通过JSBridge.scrollPage('slave')切换到前端 |
+| presentation | 多屏环境下，其他屏幕显示的节目单 |
 
 
-### 2.24 保存播放单
+### 2.27 向播放单实时删除已存在条目(默认不保存)
 
-#### 2.24.1 编程
+#### 2.27.1 编程
+```js
+var who = {playlist: 14, key: 0};
+JSBridge.removePlayListFile(who);
+```
+
+向播放单中删除指定编号的节目。
+#### 2.27.2 输入字段说明
+|字段|说明|
+|:----- |:------|
+| playlist | 该条目对应的播放单ID |
+| key | 节目的编号， 可通过getRealTimePlayListSync获取节目的key字段 |
+
+
+### 2.28 保存播放单
+
+#### 2.28.1 编程
 ```js
 var who = {playlist: 14};
 JSBridge.savePlayListFiles(who);

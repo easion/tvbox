@@ -17,6 +17,9 @@
 > 网站: 
 **kuaipin.wifi-town.com**
 
+> 默认测试环境最新版本请访问网址：
+**https://kuaipin.wifi-town.com/kp/connect.html**
+
 
 ## 1. 概论
   [RaftLink](https://raftlink.1688.com/)是广州市孚海软件技术有限公司的注册商标.
@@ -110,35 +113,49 @@ console.log("getSystemInfoSync "+ JSON.stringify(sysInfo) );
 应答
 ```json
 {
-	"vol_max": 7,
-	"vol_current": 0,
-	"last_version": 36,
-	"last_demos": "新版本发布",
-	"DeviceID": "Buo7QUnd415539",
-	"DeviceQR": "http://kuaipin.wifi-town.com/api/serial_query/0a96655f480c1eee#BIND_Buo7QUnd415539",
-	"serial": "0a96655f480c1eee",
+	"last_version": 42,
+	"last_demos": "支持多屏显示",
+	"DeviceID": "r1hWbFsnN1558053123",
+	"DeviceQR": "http://kuaipin.wifi-town.com/api/serial_query/N1C6K56GCL#BIND_r1hWbFsnN1558053123",
+	"serial": "N1C6K56GCL",
+	"downloadTimeout": 40,
 	"email": "test@envcat.com",
 	"DeviceRole": "lan",
+	"mobileDataEnabled": false,
+	"mainScreen": 2,
 	"slaveScreen": 14,
-	"ip": "192.168.19.205",
+	"presentationScreen": 16,
+	"ip": "192.168.8.118",
 	"port": 8080,
 	"expired": false,
-	"wifiEnabled": false,
-	"wifiState": 1,
-	"model": "V-BOX",
-	"product": "rk322x_box",
-	"sdk_int": 25,
-	"brand": "Android",
-	"display": "NV4.20180416",
-	"version": "1.36",
-	"versioncode": 36,
-	"dpi": 160,
-	"widthPixels": 1280,
-	"heightPix": 672,
-	"scaledDensity": 1,
-	"density": 1,
-	"bluetoothEnabled": true,
-	"id": 123
+	"presentationEnabled": false,
+	"wifiEnabled": true,
+	"wifiState": 3,
+	"displayCount": 2,
+	"displayList": [{
+		"id": 0,
+		"name": "内置屏幕"
+	}, {
+		"id": 1,
+		"name": "HDMI 屏幕"
+	}],
+	"ssid": "",
+	"WiFiIP": 0,
+	"mac": "A2:25:90:BE:CB:96",
+	"network": -1,
+	"model": "rk3288",
+	"product": "rk3288",
+	"sdk_int": 27,
+	"brand": "rockchip",
+	"display": "rk3288-userdebug 8.1.0 OPM8.181005.003 120911 test-keys",
+	"version": "1.42",
+	"versioncode": 42,
+	"dpi": 220,
+	"widthPixels": 1920,
+	"heightPix": 1014,
+	"scaledDensity": 1.375,
+	"density": 1.375,
+	"bluetoothEnabled": true
 }
 ```
 
@@ -148,7 +165,6 @@ console.log("getSystemInfoSync "+ JSON.stringify(sysInfo) );
 | versioncode| 当前软件的版本号|
 | last_version|  当前最新的固件版本|
 | last_demos|  固件更新内容|
-| vol_max|  音量|
 | DeviceID|云端分配的设备唯一编码|
 | DeviceQR| 设备信息查询、软件注册二维码|
 | serial| 硬件唯一序列号|
@@ -165,9 +181,17 @@ console.log("getSystemInfoSync "+ JSON.stringify(sysInfo) );
 | dpi| 屏幕显示密度，可设置|
 | widthPixels| ，屏幕像素，可设置|
 | bluetoothEnabled| 是否启用了蓝牙|
+| downloadTimeout |  默认下载最大超时(所有任务)|
+| mobileDataEnabled |  是否已经启用4G流量上网功能|
+| mainScreen | 主屏当前播放单ID  |
+| slaveScreen | 后台当前播放单ID(默认隐藏，可激活)  |
+| presentationScreen | 多屏异显环境下，其他屏幕当前播放单ID  |
+| displayCount | 多屏显示环境下，屏幕个数  |
+| displayList | 多屏显示环境下，所有屏幕信息  |
 
-主频的播放单ID分别是0，1，2，3.对应00:00-23:59:59的4个时间段。
 
+主频的播放单ID分别是0，1，2，3.对应00:00-23:59:59每6小时为一段的4个时间段。
+多屏异显当前主要测试平台为RK3288，支持自动发现、投送。
 
 
 ### 2.3 查询网络状态
@@ -514,7 +538,7 @@ JSBridge.vioceSetting(newSetting, function(res){
 设置百度语音tts声音效果方案
 
 
-#### 2.7.2 输入/输出字段说明
+#### 2.17.2 输入/输出字段说明
 
 取值请参考[百度TTS文档](https://ai.baidu.com/docs#/TTS-Android-SDK/top)
 
@@ -531,6 +555,33 @@ JSBridge.vioceSetting(newSetting, function(res){
 #### 调试
 console.log的输出将保存在系统日志logcat中。
 请登录到web控制台，菜单展开后点击“日志”目录。   
+
+
+### 2.18 获取音量信息
+
+#### 2.18.1 编程
+```js
+var vols = JSBridge.getVolumeSync();
+```
+
+获取当前设备音量信息，vol为系统音量，其他类型照字面意思理解。
+
+```json
+{
+	"vol_max": 7,
+	"vol_current": 7,
+	"music_max": 15,
+	"music_current": 0,
+	"alarm_max": 7,
+	"alarm_current": 7,
+	"notification_max": 7,
+	"notification_current": 7,
+	"ring_max": 7,
+	"ring_current": 7,
+	"voice_call_max": 5,
+	"voice_call_current": 5
+}
+```
 
 
 

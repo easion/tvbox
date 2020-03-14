@@ -1,10 +1,10 @@
 
-# RaftLink��Ϣ�����ն� WebApp���ָ��
+# RaftLink信息发布终端 WebApp编程指南
 
 ![xiaofu.png](xiaofu.png)
   
 ###### Guangzhou Fuhai Software Technology Co., Ltd.
-###### �������ں������������޹�˾ ��Ʒ
+###### 广州市孚海软件技术有限公司 出品
 [Company website http://www.wifi-town.com](https://www.wifi-town.com/)
 
 
@@ -12,36 +12,36 @@
 |Version|Revision|Author|Date|
 |:----- |:-------|:-----|----- |
 |v1.0 |First initial version|Easion|2019-08-26 |
-|v1.1 |���Ӷ���������API��2.18�¼��Ժ�|Easion|2020-03-14 |
+|v1.1 |增加多屏环境等API见2.18章及以后|Easion|2020-03-14 |
 
 
-> ��վ: 
+> 网站: 
 **kuaipin.wifi-town.com**
 
-> Ĭ�ϲ��Ի������°汾�������ַ��
+> 默认测试环境最新版本请访问网址：
 **https://kuaipin.wifi-town.com/kp/connect.html**
 
 
-## 1. ����
-  [RaftLink](https://raftlink.1688.com/)�ǹ������ں������������޹�˾��ע���̱�.
+## 1. 概论
+  [RaftLink](https://raftlink.1688.com/)是广州市孚海软件技术有限公司的注册商标.
   
-RaftLink��Ϣ�����ն��ǻ��ڰ�׿����Ϣ����Ӧ�á��û������Զ�����ҳ���õ�Ƭ����Ƶ�������͵Ķ�ý���ļ�������ʽ��Ĭ�ϵİ���ÿ6Сʱһ��ʱ��Σ���ȫ�컮�ֳ�4��ʱ��Σ�ÿ��ʱ��ο��Բ�����ͬ�����ݡ�
+RaftLink信息发布终端是基于安卓的信息发布应用。用户可以自定义网页、幻灯片、视频三种类型的多媒体文件播出方式，默认的按照每6小时一个时间段，将全天划分成4个时间段，每个时间段可以播出不同的内容。
   
-RaftLink��Ϣ�����ն˿�֧��2��������Ļ�����ǽ����û�����WebApp�ķ�ʽ����������Ϣ����Ӧ�ã�����ͨ��WEB JavaScript����ʵ�ֲ�ͬ��Ļ���л������ŵ��Ķ�ȡ���޸ġ��ı�ת�����ȹ��ܡ��ǳ��ʺϲ�������Angular/Vue/ReactJS+WebSocket�������������ĵ�ҳ��Ϣ����ϵͳ��
+RaftLink信息发布终端可支持2个虚拟屏幕，我们建议用户采用WebApp的方式开发您的信息发布应用，可以通过WEB JavaScript代码实现不同屏幕的切换、播放单的读取和修改、文本转语音等功能。非常适合采用类似Angular/Vue/ReactJS+WebSocket技术方案构建的单页信息发布系统。
   
-�����豸�ṩJavaScriptתnative���ܣ�������΢�Ź��ںŵ�JSAPI���ܣ�ͨ��JS�������ԭ���ײ�ʵ�֣��豸��ƫ����WEB�Եײ�������ܵĲٿأ��Ӷ�������ɲ�Ʒ�����߲����ٵ���������
+我们设备提供JavaScript转native功能，它类似微信公众号的JSAPI功能，通过JS代码调用原生底层实现，设备更偏重于WEB对底层基本功能的操控，从而快速完成产品的上线并快速迭代开发。
     
-    ���������豸�����ṩ����ͨ�û�����JS����Ȩ�޲����������ߵ���Դ������ӿڵ�ǩ��У�������
+    由于我们设备并非提供给普通用户，对JS调用权限并不检查调用者的来源，无需接口的签名校验操作。
     
-[RaftLink�豸�����ַ](https://raftlink.1688.com/)
+[RaftLink设备购买地址](https://raftlink.1688.com/)
  
   - 
- ## 1.���������
+ ## 1.导入基础库
 
-��������⣬�ɴ� [https://kuaipin.wifi-town.com](https://kuaipin.wifi-town.com) ���������ļ���
+导入基础库，可从 [https://kuaipin.wifi-town.com](https://kuaipin.wifi-town.com) 下载下面文件。
 ```html
 <head>
-<--- ʡ��������Ϣ   --->
+<--- 省略其他信息   --->
 <script src="https://kuaipin.wifi-town.com/kp/dsbridge.js"> </script>
 <script src="https://kuaipin.wifi-town.com/kp/fly.js"></script>
 <script src="https://kuaipin.wifi-town.com/kp/engine-wrapper.js"></script>
@@ -49,7 +49,7 @@ RaftLink��Ϣ�����ն˿�֧��2��������Ļ�����ǽ����û�����WebApp�ķ�ʽ����������Ϣ�
 </head>
 ```
 
-����Ƿ�֧��JSBridge
+检查是否支持JSBridge
 ```js
 var engine = EngineWrapper(dsbAdapter)
 fly.engine = engine;
@@ -63,12 +63,12 @@ else{
 }
 ```
 
- ## 2.���API
+ ## 2.编程API
   
-**JSBridge��֧���¼��ص�**
+**JSBridge可支持事件回调**
 ```mermaid
 ```
-#### ע��ص�
+#### 注册回调
 ```js
 function bridgeEventHandle(e)
 {
@@ -80,7 +80,7 @@ function onLocalServiceLost(e)
 }
 function onLocalServiceFound(e)
 {
-	//JSBridge.Speak('�ҵ�HomeKit�豸!');
+	//JSBridge.Speak('找到HomeKit设备!');
 	console.log("onLocalServiceFound handle " + JSON.stringify(e) );
 }
 function onLocalServiceDiscoveryStop(e)
@@ -103,19 +103,19 @@ JSBridge.register('onLocalServiceLost', onLocalServiceLost);
 JSBridge.register('onLocalServiceDiscoveryStop', onLocalServiceDiscoveryStop);
 ```
 
-### 2.2 ��ѯϵͳ��Ϣ
+### 2.2 查询系统信息
 
-#### 2.2.1 ��̵���
+#### 2.2.1 编程调用
 ```js
 var sysInfo = JSBridge.getSystemInfoSync();
 console.log("getSystemInfoSync "+ JSON.stringify(sysInfo) );
 ```
 
-Ӧ��
+应答
 ```json
 {
 	"last_version": 42,
-	"last_demos": "֧�ֶ�����ʾ",
+	"last_demos": "支持多屏显示",
 	"DeviceID": "r1hWbFsnN1558053123",
 	"DeviceQR": "http://kuaipin.wifi-town.com/api/serial_query/N1C6K56GCL#BIND_r1hWbFsnN1558053123",
 	"serial": "N1C6K56GCL",
@@ -135,10 +135,10 @@ console.log("getSystemInfoSync "+ JSON.stringify(sysInfo) );
 	"displayCount": 2,
 	"displayList": [{
 		"id": 0,
-		"name": "������Ļ"
+		"name": "内置屏幕"
 	}, {
 		"id": 1,
-		"name": "HDMI ��Ļ"
+		"name": "HDMI 屏幕"
 	}],
 	"ssid": "",
 	"WiFiIP": 0,
@@ -160,44 +160,44 @@ console.log("getSystemInfoSync "+ JSON.stringify(sysInfo) );
 }
 ```
 
-#### 2.2.2 �����ֶ�˵��
-|�ֶ�|˵��|
+#### 2.2.2 返回字段说明
+|字段|说明|
 |:----- |:------|
-| versioncode| ��ǰ�����İ汾��|
-| last_version|  ��ǰ���µĹ̼��汾|
-| last_demos|  �̼���������|
-| DeviceID|�ƶ˷�����豸Ψһ����|
-| DeviceQR| �豸��Ϣ��ѯ������ע���ά��|
-| serial| Ӳ��Ψһ���к�|
-| DeviceRole| �豸���ͣ����ڲ�ͬ����;��Ĭ��Ϊlan���̶�|
-| slaveScreen| �����Ĳ��ŵ�ID|
-| ip| �豸��IP��ַ|
-| port| �豸WEB���ʶ˿�|
-| expired| ������Ȩ�Ƿ��Ѿ�����|
-| wifiEnabled| �Ƿ�ʹ��WIFI|
-| model| ��׿��Ʒmodel|
-| product| ��׿��ƷID|
-| display| ��ʾ��Ϣ|
-| sdk_int| ��׿SDK�汾��|
-| dpi| ��Ļ��ʾ�ܶȣ�������|
-| widthPixels| ����Ļ���أ�������|
-| bluetoothEnabled| �Ƿ�����������|
-| downloadTimeout |  Ĭ���������ʱ(��������)|
-| mobileDataEnabled |  �Ƿ��Ѿ�����4G������������|
-| mainScreen | ������ǰ���ŵ�ID  |
-| slaveScreen | ��̨��ǰ���ŵ�ID(Ĭ�����أ��ɼ���)  |
-| presentationScreen | �������Ի����£�������Ļ��ǰ���ŵ�ID  |
-| displayCount | ������ʾ�����£���Ļ����  |
-| displayList | ������ʾ�����£�������Ļ��Ϣ  |
+| versioncode| 当前软件的版本号|
+| last_version|  当前最新的固件版本|
+| last_demos|  固件更新内容|
+| DeviceID|云端分配的设备唯一编码|
+| DeviceQR| 设备信息查询、软件注册二维码|
+| serial| 硬件唯一序列号|
+| DeviceRole| 设备类型，用于不同的用途，默认为lan，固定|
+| slaveScreen| 从屏的播放单ID|
+| ip| 设备的IP地址|
+| port| 设备WEB访问端口|
+| expired| 软件授权是否已经过期|
+| wifiEnabled| 是否使用WIFI|
+| model| 安卓产品model|
+| product| 安卓产品ID|
+| display| 显示信息|
+| sdk_int| 安卓SDK版本号|
+| dpi| 屏幕显示密度，可设置|
+| widthPixels| ，屏幕像素，可设置|
+| bluetoothEnabled| 是否启用了蓝牙|
+| downloadTimeout |  默认下载最大超时(所有任务)|
+| mobileDataEnabled |  是否已经启用4G流量上网功能|
+| mainScreen | 主屏当前播放单ID  |
+| slaveScreen | 后台当前播放单ID(默认隐藏，可激活)  |
+| presentationScreen | 多屏异显环境下，其他屏幕当前播放单ID  |
+| displayCount | 多屏显示环境下，屏幕个数  |
+| displayList | 多屏显示环境下，所有屏幕信息  |
 
 
-��Ƶ�Ĳ��ŵ�ID�ֱ���0��1��2��3.��Ӧ00:00-23:59:59ÿ6СʱΪһ�ε�4��ʱ��Ρ�
-�������Ե�ǰ��Ҫ����ƽ̨ΪRK3288��֧���Զ����֡�Ͷ�͡�
+主频的播放单ID分别是0，1，2，3.对应00:00-23:59:59每6小时为一段的4个时间段。
+多屏异显当前主要测试平台为RK3288，支持自动发现、投送。
 
 
-### 2.3 ��ѯ����״̬
+### 2.3 查询网络状态
 
-#### 2.3.1 ��̼ܹ�
+#### 2.3.1 编程架构
 ```js
 function queryNetState()
 {
@@ -205,10 +205,10 @@ function queryNetState()
 	console.log("netinfo "+ JSON.stringify(netinfo) );
 	if (netinfo.connected === true)
 	{
-	  console.log("�Ѿ����ӵ�����");
+	  console.log("已经连接到网络");
 	}
 	else{
-	  console.log("�����ѶϿ�");
+	  console.log("网络已断开");
 	}
 }
 ```
@@ -232,18 +232,18 @@ function queryNetState()
 }
 ```
 
-#### 2.3.2 �����ֶ�˵��
-|�ֶ�|˵��|
+#### 2.3.2 返回字段说明
+|字段|说明|
 |:----- |:------|
-| connected | �����Ƿ��Ѿ����� |
-| type | ��ǰ�������ͣ���wifi,lte |
-| networkType | �ƶ���������,��2g,3g,4g |
-| simOperator | �ƶ�������Ӫ��ID |
-| traffic | ����ͳ��,��λΪ�ֽ������߱��ĸ��� |
+| connected | 网络是否已经连接 |
+| type | 当前网络类型，如wifi,lte |
+| networkType | 移动网络类型,如2g,3g,4g |
+| simOperator | 移动网络运营商ID |
+| traffic | 流量统计,单位为字节数或者报文个数 |
 
-### 2.4 ������Ļ�л�
+### 2.4 主从屏幕切换
 
-#### 2.5.1 ���
+#### 2.5.1 编程
 ```js
 JSBridge.scrollPage('slave');
 setTimeout(function(){
@@ -251,29 +251,29 @@ setTimeout(function(){
 },60000)
 ```
 
-ע�⣺����Ļ��WEBҳ���л�������ҳ�棬�������뽹���Ѿ��ı䡣
-JS�����ܻ�ȡ�û��İ�����Ϣ����ʹ�������߼����ҳ����лء�
+注意：当屏幕从WEB页面切换到其他页面，由于输入焦点已经改变。
+JS将不能获取用户的按键消息，请使用软件逻辑完成页面的切回。
 
-#### 2.4.1 �������˵��
-|�ֶ�|˵��|
+#### 2.4.1 输入参数说明
+|字段|说明|
 |:----- |:------|
-| main|  �л�������|
-| slave| �л������� |
-| toggle| ����ģʽ |
+| main|  切换到主屏|
+| slave| 切换到从屏 |
+| toggle| 触发模式 |
 
 
-### 2.5 �̼�����
+### 2.5 固件升级
 
-#### 2.5.1 ��̼ܹ�
+#### 2.5.1 编程架构
 ```js
 JSBridge.fwUpdate();
 ```
-�Զ���ת���������棬������°汾���Զ��������������������ʼ���档
-�ɸ��ݻ�ȡϵͳ��ϢAPI���ж��Ƿ���Ҫ֧�����������
+自动跳转到升级界面，如果有新版本将自动升级，否则会重启到初始界面。
+可根据获取系统信息API来判断是否需要支持这个操作。
 
-### 2.6 ���ŵ��Ķ�ȡ������
+### 2.6 播放单的读取与设置
 
-#### 2.7.1 ��̼ܹ�
+#### 2.7.1 编程架构
 ```js
 
 var plBrowser = {};
@@ -301,7 +301,7 @@ plVid.local = true;
 plVid.demos = "js video";
 plVid.data = {};
 
-/*�������ص����أ���Ƶ/ͼƬ����ͬ���Ľṹ*/
+/*网络下载到本地，视频/图片都是同样的结构*/
 var httpVid = {};
 httpVid.media_type = "media";
 httpVid.name = "js http";
@@ -327,8 +327,8 @@ if (sysInfo.slaveScreen !== undefined)
 }
 
 ```
-���ŵ�֧�����ߵ��ļ�����http https��ͷ��Э�飬������ΪͼƬ������Ƶ��
-������������ʱ����������ؽ����Զ�������غ�������
+播放单支持在线的文件，如http https开头的协议，如类型为图片或者视频。
+在软件启动的时候会启动下载界面自动完成下载和重启。
 
 ```json
 {
@@ -343,26 +343,26 @@ if (sysInfo.slaveScreen !== undefined)
 }
 ```
 
-#### 2.6.2 �����ֶ�˵��
-|�ֶ�|˵��|
+#### 2.6.2 返回字段说明
+|字段|说明|
 |:----- |:------|
-| channel|  ���ŵ�ID����ΧΪ0-3,14|
-| data | ���ŵ����ݣ���дnull��ʾɾ�����ŵ� |
-| data.name| ���� |
-| data.media_type| ���ͣ��ֱ��� uri,media,slideshow|
-| data.local| �Ƿ���ñ��ص��ļ����� |
-| data.data | �������� |
+| channel|  播放单ID，范围为0-3,14|
+| data | 播放单内容，填写null表示删除播放单 |
+| data.name| 名称 |
+| data.media_type| 类型，分别是 uri,media,slideshow|
+| data.local| 是否采用本地的文件内容 |
+| data.data | 网络内容 |
 
 ### 2.7 WebP2P
 
 
-#### ngrok����������̳̣�
+#### ngrok服务器部署教程：
 [https://luozm.github.io/ngrok](https://luozm.github.io/ngrok)
 
 
-#### 2.7.1 ���
+#### 2.7.1 编程
 
-����/����web�������
+启动/保存web反向代理
 ```js
 
 var opt = {};
@@ -373,8 +373,8 @@ opt.port = 1234;
 var p2pInfo = JSBridge.getWebP2pInfoSync();
 if (p2pInfo.autoboot !== true)
 {		
-	//opt.autoboot = false; //�����Զ�����
-	opt.focus = false; //ǿ�Ʊ���		
+	//opt.autoboot = false; //开机自动启动
+	opt.focus = false; //强制保存		
 }
 else{
 	console.log("getWebP2pInfoSync "+ JSON.stringify(p2pInfo) );
@@ -398,38 +398,38 @@ if (p2pInfo.running !== true)
 }
 ```
 
-ֹͣweb�������:
+停止web反向代理:
 ```js
 JSBridge.stopWebP2P();
 ```
 
 
-#### 2.7.2 ����/����ֶ�˵��
-|�ֶ�|˵��|
+#### 2.7.2 输入/输出字段说明
+|字段|说明|
 |:----- |:------|
-| host|  NGROK����������ַ|
-| port| NGROK�����������Ӷ˿� |
-| domain| ��ǰ������������ |
-| autoboot| �Ƿ񿪻��Զ������˷��� |
-| focus| �Ƿ�ǿ��(force)���� |
+| host|  NGROK服务主机地址|
+| port| NGROK服务主机连接端口 |
+| domain| 当前主机的子域名 |
+| autoboot| 是否开机自动启动此服务 |
+| focus| 是否强制(force)保存 |
 
-### 2.8 ���̿ռ�
+### 2.8 磁盘空间
 
-#### 2.8.1 ���
+#### 2.8.1 编程
 ```js
 var disk = JSBridge.getDiskSpace();
-$("#total" ).html("�洢 ����" + disk.free + "M,�ܹ�" + disk.total+"M");
+$("#total" ).html("存储 空闲" + disk.free + "M,总共" + disk.total+"M");
 ```
 
-��ȡ��ǰ�豸�洢�ռ�������Ϣ����λΪM�����ֽڣ�
+获取当前设备存储空间用量信息，单位为M（兆字节）
 
 ```json
  {"total":12345,"free":11685}
 ```
 
-### 2.9 ��ȡWifi AP�б�
+### 2.9 获取Wifi AP列表
 
-#### 2.9.1 ���
+#### 2.9.1 编程
 ```js
 JSBridge.onGetWifiList(function(list){
 	var select = $('#wifilist');
@@ -443,78 +443,78 @@ JSBridge.onGetWifiList(function(list){
 });
 ```
 
-��ȡ���õ�AP�б�
+获取可用的AP列表
 
-### 2.10 �˳�����(�Զ�����)
+### 2.10 退出程序(自动重启)
 
-#### 2.10.1 ���
+#### 2.10.1 编程
 ```js
 JSBridge.exitProgram();
 ```
-�˳���ǰ�������޸��˲��ŵ����ɵ��ô�API����������������µĲ��ŵ��ļ��ء�
+退出当前程序，如修改了播放单，可调用此API，可在重启后完成新的播放单的加载。
 
 
-### 2.11 �ػ�
+### 2.11 关机
 
-#### 2.11.1 ���
+#### 2.11.1 编程
 ```js
 JSBridge.powerOff();
 ```
 
 
 
-### 2.12 ����
+### 2.12 重启
 
-#### 2.12.1 ���
+#### 2.12.1 编程
 ```js
 JSBridge.reboot();
 ```
 
-### 2.13 ����ת����
+### 2.13 文字转语音
 
-#### 2.13.1 ���
+#### 2.13.1 编程
 ```js
-JSBridge.Speak("��� ����");
+JSBridge.Speak("你好 世界");
 ```
 
-### 2.14 ��������
+### 2.14 设置音量
 
-#### 2.14.1 ���
+#### 2.14.1 编程
 ```js
 JSBridge.setVolume({type:'notify', val: '7'});
 ```
 
 
-#### 2.14.2 ����/����ֶ�˵��
-|�ֶ�|˵��|
+#### 2.14.2 输入/输出字段说明
+|字段|说明|
 |:----- |:------|
-| type |  notifyΪ֪ͨ������musicΪý������ |
-| vol| ��������������ջ�ȡϵͳ��Ϣ��������Χ��д,incΪ���ӣ�decΪ���� |
+| type |  notify为通知音量，music为媒体音量 |
+| vol| 音量参数，请参照获取系统信息的音量范围填写,inc为增加，dec为减少 |
 
-### 2.15 MDNS��ѯ
+### 2.15 MDNS查询
 
-#### 2.15.1 ���
+#### 2.15.1 编程
 ```js
 JSBridge.startLocalServiceDiscovery({type: "_hap._tcp."}, function(list){
 	console.log("startLocalServiceDiscovery "+ JSON.stringify(list) );
 });
 ```
-��ѯ�Ľ����2.1�½�ע���MDNS�ص�������
+查询的结果见2.1章节注册的MDNS回调函数。
 
 
-### 2.16 ִ������
+### 2.16 执行命令
 
-#### 2.16.1 ���
+#### 2.16.1 编程
 ```js
 JSBridge.doExecCommand("/system/xbin/cpustats");
 ```
-����ָ������͵�һ���߳��첽ִ�У����Բ�֧�ַ���������ݡ�
+上面指令会推送到一个线程异步执行，所以不支持返回输出数据。
 
 
 
-### 2.16 TTS����
+### 2.16 TTS设置
 
-#### 2.16.1 ���
+#### 2.16.1 编程
 ```js
 var voiceSample = {};
 
@@ -526,63 +526,63 @@ voiceSample.pitch = '5';
 
 voiceSample = JSBridge.getVioceSetting();
 console.log("getVioceSetting "+ JSON.stringify(voiceSample) );
-voiceSample.speaker = '110'; //��Сͯ����ж�ͯ����
+voiceSample.speaker = '110'; //度小童（情感儿童声）
 var newSetting = {data: voiceSample};
 JSBridge.vioceSetting(newSetting, function(res){
 	console.log("vioceSetting "+ JSON.stringify(res) );
 	if (res.result == 0)
 	{
-		JSBridge.Speak('TTS�����Ѿ�����,����������Ч');
+		JSBridge.Speak('TTS配置已经更新,重启程序生效');
 	}
 	else{
-		JSBridge.Speak('TTS�����Ѿ�ɾ��');
+		JSBridge.Speak('TTS配置已经删除');
 	}
 });
 
-//ɾ��
+//删除
 newSetting = {data: null};
 JSBridge.vioceSetting(newSetting, function(res){
 	console.log("vioceSetting "+ JSON.stringify(res) );
 	if (res.result == 0)
 	{
-		JSBridge.Speak('TTS�����Ѿ�����,����������Ч');
+		JSBridge.Speak('TTS配置已经更新,重启程序生效');
 	}
 	else{
-		JSBridge.Speak('TTS�����Ѿ�ɾ��');
+		JSBridge.Speak('TTS配置已经删除');
 	}
 });
 
 ```
-���ðٶ�����tts����Ч������
+设置百度语音tts声音效果方案
 
 
-#### 2.17.2 ����/����ֶ�˵��
+#### 2.17.2 输入/输出字段说明
 
-ȡֵ��ο�[�ٶ�TTS�ĵ�](https://ai.baidu.com/docs#/TTS-Android-SDK/top)
+取值请参考[百度TTS文档](https://ai.baidu.com/docs#/TTS-Android-SDK/top)
 
-|�ֶ�|˵��|
+|字段|说明|
 |:----- |:------|
-| volume|  ������ȡֵ0-15��|
-| speed| ���٣�ȡֵ0-15 |
-| pitch| ������ȡֵ0-15��Ĭ��Ϊ5����� |
-| speaker| ���������� |
+| volume|  音量，取值0-15，|
+| speed| 语速，取值0-15 |
+| pitch| 音调，取值0-15，默认为5中语调 |
+| speaker| 语音播放者 |
 
-��ע��������������Ϊ�ַ���
-ɾ��data��дnull����Ϊ��
+请注意上面数据类型为字符串
+删除data填写null或者为空
 
-#### ����
-console.log�������������ϵͳ��־logcat�С�
-���¼��web����̨���˵�չ����������־��Ŀ¼��   
+#### 调试
+console.log的输出将保存在系统日志logcat中。
+请登录到web控制台，菜单展开后点击“日志”目录。   
 
 
-### 2.18 ��ȡ������Ϣ
+### 2.18 获取音量信息
 
-#### 2.18.1 ���
+#### 2.18.1 编程
 ```js
 var vols = JSBridge.getVolumeSync();
 ```
 
-��ȡ��ǰ�豸������Ϣ��volΪϵͳ����������������������˼���⡣
+获取当前设备音量信息，vol为系统音量，其他类型照字面意思理解。
 
 ```json
 {
@@ -601,15 +601,15 @@ var vols = JSBridge.getVolumeSync();
 }
 ```
 
-### 2.19 ��ȡ���������ô洢�ļ��б�
+### 2.19 获取机顶盒内置存储文件列表
 
-#### 2.19.1 ���
+#### 2.19.1 编程
 ```js
 var path = 'picture';
 var fileList = JSBridge.getFloderContents(path + '/');
 ```
 
-��ȡ��ǰָ��Ŀ¼(����ΪString)���ļ��б�,��Ƭ�ϴ�Ϊpicture,��ƵΪvideo,PDFΪpdf��
+获取当前指定目录(参数为String)的文件列表,照片上传为picture,视频为video,PDF为pdf。
 
 ```json
 [{
@@ -620,54 +620,71 @@ var fileList = JSBridge.getFloderContents(path + '/');
 	"time": 1565775738000
 }]
 ```
-#### 2.3.2 �����ֶ�˵��
-|�ֶ�|˵��|
+#### 2.3.2 返回字段说明
+|字段|说明|
 |:----- |:------|
-| path | ·�� |
-| filename | �ļ��� |
-| size | �ļ���С |
-| id | ��� |
-| time | �ļ�����޸�UNIXʱ�������λ���� |
+| path | 路径 |
+| filename | 文件名 |
+| size | 文件大小 |
+| id | 编号 |
+| time | 文件最后修改UNIX时间戳，单位毫秒 |
 
 
-### 2.20 ɾ���ļ�
+### 2.20 删除文件
 
-#### 2.20.1 ���
+#### 2.20.1 编程
 ```js
 JSBridge.removeFile("picture/bg-9.jpg");
 ```
 
-ɾ���趨���ļ�
+删除设定的文件
 
 
 
 
-### 2.21 ��������
+### 2.21 清理缓存
 
-#### 2.21.1 ���
+#### 2.21.1 编程
 ```js
 JSBridge.destroyCache();
 ```
 
-ɾ��Ӧ�û��桢�Լ�������������桢��ʷ��¼����Ϣ��
+删除应用缓存、以及清理浏览器缓存、历史记录等信息。
 
-### 2.22 ��Ӧ��
+### 2.22 打开应用
 
-#### 2.22.1 ���
+#### 2.22.1 编程
 ```js
 JSBridge.openApp("android.settings.SETTINGS");
 ```
 
-��ָ��·����Ӧ�ó���������ý���
+打开指定路径的应用程序或者设置界面
 
+### 2.23 设定下载超时
+
+#### 2.23.1 编程
+```js
+JSBridge.setDownloadTimeout("30");
+```
+
+设定下载播放单内媒体文件最大超时时间，单位为秒，目前暂支持字符串格式的数字
+
+### 2.24 打开/设置跑马灯文字内容
+
+#### 2.24.1 编程
+```js
+JSBridge.setMarquee("你好 世界");
+```
+
+设定跑马灯文字，如需要关闭跑马灯，参数可输入"//close"。
 
 ## 3. FAQ
   
-####  3.1����Ҫ����һЩAPI ���������ύ
-   ��ͨ���·����ʼ��������������͸������ߡ�
+####  3.1我需要增加一些API 可以怎样提交
+   可通过下方的邮件，将您的需求发送给开发者。
 
 
-## 4.0 ��ϵ������
+## 4.0 联系开发者
 ----
 
 ```sh

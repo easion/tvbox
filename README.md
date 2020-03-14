@@ -116,9 +116,9 @@ console.log("getSystemInfoSync "+ JSON.stringify(sysInfo) );
 {
 	"last_version": 42,
 	"last_demos": "支持多屏显示",
-	"DeviceID": "r1hWbFsnN1558053123",
-	"DeviceQR": "http://kuaipin.wifi-town.com/api/serial_query/N1C6K56GCL#BIND_r1hWbFsnN1558053123",
-	"serial": "N1C6K56GCL",
+	"DeviceID": "r13bFs123",
+	"DeviceQR": "http://kuaipin.wifi-town.com/api/serial_query/N326GCL#BIND_r13bFs123",
+	"serial": "N326GCL",
 	"downloadTimeout": 40,
 	"email": "test@envcat.com",
 	"DeviceRole": "lan",

@@ -489,6 +489,8 @@ JSBridge.setVolume({type:'notify', val: '7'});
 |字段|说明|
 |:----- |:------|
 | type |  notify为通知音量，music为媒体音量 |
+| type |  system为系统音量，alarm为闹钟音量 |
+| type |  ring为铃声音量，voice_call为电话音量 |
 | vol| 音量参数，请参照获取系统信息的音量范围填写,inc为增加，dec为减少 |
 
 ### 2.15 MDNS查询
@@ -677,6 +679,54 @@ JSBridge.setMarquee("你好 世界");
 ```
 
 设定跑马灯文字，如需要关闭跑马灯，参数可输入"//close"。
+
+
+### 2.25 向播放单实时添加/插播新条目(默认不保存)
+
+#### 2.25.1 编程
+```js
+var newItem = {
+	"playlist": 16,
+	"uri": "http://cdn.wifi-town.com/mypic.jpg",
+	"path": "mypic.jpg",
+	"name": "Demo Add"
+};
+JSBridge.addPlayListFile(newItem);
+```
+
+向播放单实时添加新条目(默认不保存),新条目会尽快安排播出，但不保存到当前播放单，
+需要调用savePlayListFiles才能保存。
+
+#### 2.25.2 返回字段说明
+|字段|说明|
+|:----- |:------|
+| playlist | 该条目对应的播放单ID |
+| path | 文件下载后保存名称 |
+| uri | 文件在互联网的地址 |
+| name | 文件展示名称 |
+
+
+### 2.24 保存播放单
+
+#### 2.24.1 编程
+```js
+var who = {playlist: 14};
+JSBridge.savePlayListFiles(who);
+```
+
+保存通过removePlayListFile/addPlayListFile临时添加、移除的内容同步到设定的播放单
+
+
+### 2.24 保存播放单
+
+#### 2.24.1 编程
+```js
+var who = {playlist: 14};
+JSBridge.savePlayListFiles(who);
+```
+
+保存通过removePlayListFile/addPlayListFile临时添加、移除的内容同步到设定的播放单
+
 
 ## 3. FAQ
   

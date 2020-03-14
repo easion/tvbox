@@ -216,9 +216,9 @@ function queryNetState()
 ```json
 {
 	"connected": true,
-	"type": "4g",
+	"type": "LTE",
 	"simOperator": "46001",
-	"networkType": "LTE",
+	"networkType": "4g",
 	"traffic": {
 		"mobileRxBytes": 0,
 		"mobileRxPackets": 0,

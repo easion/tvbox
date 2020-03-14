@@ -601,9 +601,9 @@ var vols = JSBridge.getVolumeSync();
 }
 ```
 
-### 2.18 获取机顶盒内置存储文件列表
+### 2.19 获取机顶盒内置存储文件列表
 
-#### 2.18.1 编程
+#### 2.19.1 编程
 ```js
 var path = 'picture';
 var fileList = JSBridge.getFloderContents(path + '/');
@@ -630,9 +630,9 @@ var fileList = JSBridge.getFloderContents(path + '/');
 | time | 文件最后修改UNIX时间戳，单位毫秒 |
 
 
-### 2.18 删除文件
+### 2.20 删除文件
 
-#### 2.18.1 编程
+#### 2.20.1 编程
 ```js
 JSBridge.removeFile("picture/bg-9.jpg");
 ```
@@ -640,6 +640,25 @@ JSBridge.removeFile("picture/bg-9.jpg");
 删除设定的文件
 
 
+
+
+### 2.21 清理缓存
+
+#### 2.21.1 编程
+```js
+JSBridge.destroyCache();
+```
+
+删除应用缓存、以及清理浏览器缓存、历史记录等信息。
+
+### 2.22 打开应用
+
+#### 2.22.1 编程
+```js
+JSBridge.openApp("android.settings.SETTINGS");
+```
+
+打开指定路径的应用程序或者设置界面
 
 
 ## 3. FAQ

@@ -876,6 +876,31 @@ https://developer.android.com/reference/android/view/KeyEvent#keyCodeFromString(
 
 
 
+
+### 2.33 下载文件
+
+#### 2.33.1 编程
+```js
+var fileInfo = {
+	"url": "https://html5videoformatconverter.com/data/images/happyfit2.mp4",
+	"file": "happyfit2.mp4",
+	"timeout": 8000
+};
+JSBridge.downloadFile(fileInfo, function(value){
+	console.log("Download progress: " + value + "%");
+});
+```
+
+下载url所指向的文件到file设定的存储目录,回调函数为下载百分比。
+
+#### 2.32.2 输入字段说明
+|字段|说明|
+|:----- |:------|
+| url | 文件在互联网上地址，仅支持http/https协议 |
+| file | 文件在机顶盒上的存储路径 |
+| timeout | 最大超时，单位毫秒 |
+
+
 ## 3. FAQ
   
 ####  3.1我需要增加一些API 可以怎样提交

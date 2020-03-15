@@ -639,7 +639,7 @@ var fileList = JSBridge.getFloderContents(path + '/');
 JSBridge.removeFile("picture/bg-9.jpg");
 ```
 
-删除设定的文件
+删除设定的文件,sd卡路径从/mnt/sdcard/Cabinet/开始
 
 
 
@@ -897,7 +897,7 @@ JSBridge.downloadFile(fileInfo, function(value){
 |字段|说明|
 |:----- |:------|
 | url | 文件在互联网上地址，仅支持http/https协议 |
-| file | 文件在机顶盒上的存储路径 |
+| file | 文件在机顶盒上的存储路径,sd卡路径从/mnt/sdcard/Cabinet/开始 |
 | timeout | 最大超时，单位毫秒 |
 
 
